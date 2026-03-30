@@ -5,7 +5,7 @@ generator client {
 // Prisma v7 : l'URL du datasource est définie dans prisma.config.ts
 // Local = sqlite | Prod = postgresql (modifié par scripts/set-provider.js avant build Vercel)
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 

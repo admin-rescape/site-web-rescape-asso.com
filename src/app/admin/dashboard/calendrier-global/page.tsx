@@ -1,13 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { CalendarDays } from "lucide-react";
-import nextDynamic from "next/dynamic";
 import { isDirectionRole } from "@/lib/roles";
 
-const MegaCalendar = nextDynamic(
-    () => import("@/components/admin/MegaCalendar").then((m) => m.MegaCalendar),
-    { ssr: false, loading: () => <div className="h-96 flex items-center justify-center text-slate-400 font-semibold">Chargement du calendrier...</div> }
-);
+import { MegaCalendar } from "@/components/admin/MegaCalendar";
 
 export default async function GlobalCalendarPage() {
     const session = await auth();

@@ -22,6 +22,7 @@
     "db:prod:push": "node scripts/set-provider.js postgresql && dotenv -e .env.production.local -- prisma db push && node scripts/set-provider.js sqlite",
     "db:prod:seed": "node scripts/set-provider.js postgresql && dotenv -e .env.production.local -- npx tsx prisma/seed.ts && node scripts/set-provider.js sqlite",
     "db:prod:studio": "node scripts/set-provider.js postgresql && dotenv -e .env.production.local -- prisma studio && node scripts/set-provider.js sqlite",
+    "db:prod:migrate": "node scripts/set-provider.js postgresql && dotenv -e .env.production.local -- npx prisma migrate deploy && node scripts/set-provider.js sqlite",
     "postinstall": "prisma generate"
   },
   "prisma": {
