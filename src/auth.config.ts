@@ -2,6 +2,9 @@ import type { NextAuthConfig } from "next-auth";
 import { isPortalRole } from "@/lib/roles";
 
 export const authConfig = {
+    // trustHost lets NextAuth derive the base URL from the X-Forwarded-Host header
+    // sent by Vercel's proxy instead of falling back to NEXTAUTH_URL=localhost:3000.
+    trustHost: true,
     pages: {
         signIn: "/admin/login",
     },

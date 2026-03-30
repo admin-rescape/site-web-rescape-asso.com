@@ -30,8 +30,9 @@ if (isSqlite) {
     const pool = new Pool({
         connectionString: dbUrl,
         max: 1,
-        // Supabase requires SSL.
-        ssl: { rejectUnauthorized: false },
+        // Supabase pooler requires SSL. Set PG_SSL_REJECT_UNAUTHORIZED=false in
+        // Vercel env vars to allow Supabase's self-signed pooler certificate.
+        ssl: { rejectUnauthorized: process.env.PG_SSL_REJECT_UNAUTHORIZED !== "false" },
     });
     const adapter = new PrismaPg(pool);
 

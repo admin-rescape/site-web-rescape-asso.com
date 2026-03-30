@@ -1,13 +1,17 @@
 import { test, expect } from "@playwright/test";
 
 // ─── Fixtures: Test credentials per role ──────────────────────────────────────
+// Passwords are read from the E2E_TEST_PASSWORD environment variable so that
+// real credentials are never committed to source control. Locally the variable
+// is set in .env.local (not committed); in CI it is injected as a secret.
+const TEST_PASSWORD = process.env.E2E_TEST_PASSWORD ?? "";
 const USERS = {
-    superAdmin: { email: "admin@rescape.fr", password: "Rescape2026!", role: "SUPER_ADMIN" },
-    directrice: { email: "delaruevanessa48@gmail.com", password: "Rescape2026!", role: "DIRECTRICE" },
-    nicolas: { email: "nicolas@rescape.fr", password: "Rescape2026!", role: "DIRECTRICE" },
-    nadia: { email: "nadia@rescape.fr", password: "Rescape2026!", role: "TRESORIERE" },
-    benevole: { email: "benevole@rescape.fr", password: "Rescape2026!", role: "BENEVOLE" },
-    partenaire: { email: "partenaire@test.fr", password: "Rescape2026!", role: "PARTENAIRE" },
+    superAdmin: { email: "admin@rescape.fr", password: TEST_PASSWORD, role: "SUPER_ADMIN" },
+    directrice: { email: "delaruevanessa48@gmail.com", password: TEST_PASSWORD, role: "DIRECTRICE" },
+    nicolas: { email: "nicolas@rescape.fr", password: TEST_PASSWORD, role: "DIRECTRICE" },
+    nadia: { email: "nadia@rescape.fr", password: TEST_PASSWORD, role: "TRESORIERE" },
+    benevole: { email: "benevole@rescape.fr", password: TEST_PASSWORD, role: "BENEVOLE" },
+    partenaire: { email: "partenaire@test.fr", password: TEST_PASSWORD, role: "PARTENAIRE" },
 };
 
 async function loginAs(page: any, user: typeof USERS.directrice) {

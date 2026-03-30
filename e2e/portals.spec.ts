@@ -1,10 +1,12 @@
 import { test, expect } from "@playwright/test";
 
+// Password is read from E2E_TEST_PASSWORD env var — never hardcode credentials.
+const TEST_PASSWORD = process.env.E2E_TEST_PASSWORD ?? "";
 const USERS = {
-    directrice: { email: "delaruevanessa48@gmail.com", password: "Rescape2026!" },
-    tresoriere: { email: "nadia@rescape.fr", password: "Rescape2026!" },
-    benevole: { email: "benevole@rescape.fr", password: "Rescape2026!" },
-    partenaire: { email: "partenaire@test.fr", password: "Rescape2026!" },
+    directrice: { email: "delaruevanessa48@gmail.com", password: TEST_PASSWORD },
+    tresoriere: { email: "nadia@rescape.fr", password: TEST_PASSWORD },
+    benevole: { email: "benevole@rescape.fr", password: TEST_PASSWORD },
+    partenaire: { email: "partenaire@test.fr", password: TEST_PASSWORD },
 };
 
 async function loginAs(page: any, user: { email: string; password: string }) {
