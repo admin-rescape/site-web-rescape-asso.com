@@ -24,7 +24,15 @@ if (isSqlite) {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { PrismaPg } = require("@prisma/adapter-pg");
 
-    const pool = new Pool({ connectionString: dbUrl });
+    // Keep the pool small: Vercel serverless functions spin up many instances,
+    // each with their own pool. Supabase free tier allows ~25 total connections.
+    const pool = new Pool({
+        connectionString: dbUrl,
+        max: 2,
+        // Supabase (and most hosted PG) requires SSL — enforce it no matter
+        // what the connection string says.
+        ssl: { rejectUnauthorized: false },
+    });
     const adapter = new PrismaPg(pool);
 
     prismaInstance = new PrismaClient({
