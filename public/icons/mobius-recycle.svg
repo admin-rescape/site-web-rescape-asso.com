@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║  SIGLE RECYCLAGE — Triangle de Möbius / Chasing Arrows          ║
+    ║  Conçu avec la skill svg-artist                                 ║
+    ║                                                                  ║
+    ║  Palette (charte Asso-Rescape) :                                 ║
+    ║    Face claire  → hsl(115, 36%, 55%)   #5A8A4A + surbrillance   ║
+    ║    Face moyenne → hsl(115, 36%, 40%)   #3D6B34                  ║
+    ║    Face sombre  → hsl(115, 36%, 27%)   #295A22  (plis/dessous)  ║
+    ║    Source lumière : haut-gauche                                  ║
+    ║                                                                  ║
+    ║  Construction :                                                  ║
+    ║    Centre = (50, 50)                                            ║
+    ║    3 flèches à 0°, 120°, 240°                                   ║
+    ║    Chaque flèche = arc courbé + tête triangulaire + pli         ║
+    ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <defs>
+
+    <!-- ── Palette isométrique (3 faces, source lumière haut-gauche) ── -->
+
+    <!-- Face A — claire (face du dessus, exposée à la lumière) -->
+    <linearGradient id="fA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="hsl(115,42%,62%)"/>
+      <stop offset="100%" stop-color="hsl(115,36%,46%)"/>
+    </linearGradient>
+
+    <!-- Face B — moyenne (côté droit, demi-ombre) -->
+    <linearGradient id="fB" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="hsl(115,30%,44%)"/>
+      <stop offset="100%" stop-color="hsl(115,30%,32%)"/>
+    </linearGradient>
+
+    <!-- Face C — sombre (côté gauche/bas, dans l'ombre) -->
+    <linearGradient id="fC" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="hsl(115,28%,25%)"/>
+      <stop offset="100%" stop-color="hsl(115,28%,36%)"/>
+    </linearGradient>
+
+    <!-- Surbrillance spéculaire pour les plis retournés (effet Möbius) -->
+    <linearGradient id="fFold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="hsl(115,36%,20%)" stop-opacity="1"/>
+      <stop offset="100%" stop-color="hsl(115,36%,30%)" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Légère ombre portée pour ancrer le sigle -->
+    <filter id="iconShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="0.8" stdDeviation="1.2"
+        flood-color="hsl(115,20%,15%)" flood-opacity="0.25"/>
+    </filter>
+
+  </defs>
+
+  <!--
+    ════════════════════════════════════════════════════════════════
+    FLÈCHE 1  —  Bras GAUCHE→HAUT  (0°, face claire)
+    ════════════════════════════════════════════════════════════════
+
+    Géométrie (dans repère centré avant translate(50,50)) :
+      Corps : ruban courbé de ~8 unités de large
+      Arc extérieur r=38, arc intérieur r=28, angle 110°
+      Pointe : triangle isocèle à l'extrémité supérieure-droite
+      Pli    : petit rectangle sombre à l'extrémité inférieure-gauche
+               simulant le retournement du ruban (effet Möbius)
+
+    Commandes SVG (coords absolues dans viewBox 0 0 100 100) :
+      Début du ruban (bas-gauche) : environ (14, 73)
+      Fin du ruban (pointe)       : environ (60, 14)
+
+    Notation : tous les angles en degrés, convertis en radians
+      sin(30°)=0.5   cos(30°)=0.866
+      sin(60°)=0.866 cos(60°)=0.5
+      sin(90°)=1     cos(90°)=0
+  -->
+
+  <g id="recycle-icon" filter="url(#iconShadow)" transform="translate(50,50)">
+
+    <!-- ── FLÈCHE 1 (face claire) ── -->
+    <g id="arrow1">
+      <!--
+        Corps courbé :
+        Extérieur r=38 de 210° à 355° (dans le repère SVG, Y vers le bas)
+        Intérieur r=28 de 355° à 210° (inverse)
+
+        Points clés (deg → rad → (r·cos, r·sin)) :
+          210° → ext: (-33.0, -19)  int: (-24.2, -14)
+          270° → ext: (0, -38)      int: (0, -28)
+          340° → ext: (35.7, -13)   int: (26.3, -9.6)
+          355° → ext: (37.9, -3.3)  int: (27.9, -2.4)
+
+        NB : corps large de 10px, la flèche tourne dans le sens anti-horaire
+             dans le symbole conventionnel ♻ vu du dessus.
+
+        Pour lire les coordonnées : angle θ depuis axe +X, Y inversé (SVG)
+          x = r·cos(θ), y = -r·sin(θ)     [car Y SVG = -Y math]
+
+        Arête extérieure (CW) : 200° → 340°
+        Arête intérieure (CCW): 340° → 200°
+
+        On dessine le corps complet en un seul path :
+      -->
+      <path id="arrow1-body" fill="url(#fA)"
+        d="
+          M -22.3,33.9
+          L -26.7,26.3
+          C -34,18 -38,10 -38,0
+          C -38,-14 -30,-26 -18,-33
+          L -12.5,-27
+          C -22,-21 -28,-11 -28,0
+          C -28,8 -24.5,15 -18,21
+          L -13.5,14
+          Z
+        "
+      />
+      <!-- Tête de flèche 1 (pointe vers le haut-droit) -->
+      <!-- Position : autour de (0, -38) à (0, -24) -->
+      <polygon id="arrow1-head" fill="url(#fA)"
+        points="0,-24 15,-24 0,-46 -15,-24"
+      />
+      <!-- Pli Möbius 1 (retournement bas-gauche, face sombre) -->
+      <path id="arrow1-fold" fill="url(#fFold)"
+        d="M -26.7,26.3 L -22.3,33.9 L -17,28 L -21.5,21 Z"
+      />
+    </g>
+
+    <!-- ── FLÈCHE 2 (face moyenne, rotation 120°) ── -->
+    <g id="arrow2" transform="rotate(120)">
+      <path fill="url(#fB)"
+        d="
+          M -22.3,33.9
+          L -26.7,26.3
+          C -34,18 -38,10 -38,0
+          C -38,-14 -30,-26 -18,-33
+          L -12.5,-27
+          C -22,-21 -28,-11 -28,0
+          C -28,8 -24.5,15 -18,21
+          L -13.5,14
+          Z
+        "
+      />
+      <polygon fill="url(#fB)"
+        points="0,-24 15,-24 0,-46 -15,-24"
+      />
+      <path fill="url(#fFold)"
+        d="M -26.7,26.3 L -22.3,33.9 L -17,28 L -21.5,21 Z"
+      />
+    </g>
+
+    <!-- ── FLÈCHE 3 (face sombre, rotation 240°) ── -->
+    <g id="arrow3" transform="rotate(240)">
+      <path fill="url(#fC)"
+        d="
+          M -22.3,33.9
+          L -26.7,26.3
+          C -34,18 -38,10 -38,0
+          C -38,-14 -30,-26 -18,-33
+          L -12.5,-27
+          C -22,-21 -28,-11 -28,0
+          C -28,8 -24.5,15 -18,21
+          L -13.5,14
+          Z
+        "
+      />
+      <polygon fill="url(#fC)"
+        points="0,-24 15,-24 0,-46 -15,-24"
+      />
+      <path fill="url(#fFold)"
+        d="M -26.7,26.3 L -22.3,33.9 L -17,28 L -21.5,21 Z"
+      />
+    </g>
+
+  </g>
+</svg>

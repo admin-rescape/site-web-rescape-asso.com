@@ -1,0 +1,237 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Prisma v7 : l'URL du datasource est définie dans prisma.config.ts
+// Local = sqlite | Prod = postgresql (modifié par scripts/set-provider.js avant build Vercel)
+datasource db {
+  provider = "sqlite"
+}
+
+
+model User {
+  id                  String            @id @default(cuid())
+  email               String            @unique
+  password            String
+  name                String?
+  role                String            @default("BENEVOLE") // SUPER_ADMIN, DIRECTION, BENEVOLE, PARTENAIRE
+  organizationName    String?
+  resetToken          String?
+  resetTokenExpiry    DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  appointments     Appointment[]
+  donations        Donation[]
+  accountingEntries AccountingEntry[]
+  memberships      Membership[]
+  partnerProfile   Partner?
+  sentMessages     InternalMessage[] @relation("SentMessages")
+  receivedMessages InternalMessage[] @relation("ReceivedMessages")
+  assignedMissions Mission[]         @relation("AssignedMissions")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  excerpt     String?
+  image       String?
+  published   Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, createdAt])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  start       DateTime
+  end         DateTime?
+  location    String?
+  description String?
+  image       String?
+  status      String   @default("PUBLISHED") // DRAFT, PUBLISHED, CANCELLED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, start])
+}
+
+
+model Partner {
+  id            String   @id @default(cuid())
+  name          String
+  link          String?
+  logo          String?
+  isHighlighted Boolean  @default(false)
+  userId        String?  @unique
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  content   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Action {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  icon        String
+  image       String?
+  status      String
+  periodicity String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Stat {
+  id        String   @id @default(cuid())
+  label     String
+  value     Int
+  suffix    String?
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // DEPOT, COLLECTE
+  date      DateTime
+  notes     String?
+  status    String   @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([date])
+}
+
+model Donation {
+  id           String   @id @default(cuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  donorName    String?
+  donationType String   // ALIMENTAIRE, VETEMENTS, JOUETS, ELECTROMENAGER, AUTRE
+  quantity     Float
+  unit         String   // KG, PIECES, CARTONS
+  date         DateTime
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([date])
+}
+
+model AccountingEntry {
+  id          String   @id @default(cuid())
+  type        String   // RECETTE, DEPENSE
+  amount      Float
+  category    String   // ACHAT, LOYER, EVENEMENT, DON_RECU, VENTE, AUTRE
+  description String
+  date        DateTime
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  photo     String?
+  bio       String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TimelineEntry {
+  id        String   @id @default(cuid())
+  title     String
+  icon      String
+  content   String
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String   // facebook, instagram
+  url       String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Membership {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardNumber  String?  @unique
+  year        Int
+  amountPaid  Float    @default(15.0)
+  isPaid      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model InternalMessage {
+  id          String   @id @default(cuid())
+  fromUserId  String
+  from        User     @relation("SentMessages", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toUserId    String
+  to          User     @relation("ReceivedMessages", fields: [toUserId], references: [id], onDelete: Cascade)
+  subject     String
+  content     String
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([toUserId, isRead]) // optimises unread count query and inbox filter
+  @@index([fromUserId])       // optimises sent messages query
+  @@map("IntlMessage")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Mission {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  location    String?
+  date        DateTime
+  startTime   String?  // HH:MM
+  endTime     String?  // HH:MM
+  status      String   @default("A_FAIRE") // A_FAIRE, EN_COURS, TERMINEE, ANNULEE
+  assigneeId  String
+  assignee    User     @relation("AssignedMissions", fields: [assigneeId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([assigneeId])
+  @@index([date])
+}
+
