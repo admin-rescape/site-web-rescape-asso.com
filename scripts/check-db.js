@@ -11,17 +11,17 @@ if (!fs.existsSync(dbPath)) {
 
 const db = new Database(dbPath, { fileMustExist: true });
 
-let user = db.prepare("SELECT * FROM User WHERE email = 'direction@rescape.fr'").get();
+let user = db.prepare("SELECT * FROM User WHERE email = 'direction@rescape-asso.com'").get();
 if (!user) {
-    console.log("User 'direction@rescape.fr' not found. Creating...");
+    console.log("User 'direction@rescape-asso.com' not found. Creating...");
     const hash = bcrypt.hashSync('Rescape2026!', 10);
     const id = 'DIRECTION-' + Date.now();
     db.prepare(`INSERT INTO User (id, name, email, password, role, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'))`)
-        .run(id, 'Directeur Test', 'direction@rescape.fr', hash, 'DIRECTION');
-    user = db.prepare("SELECT * FROM User WHERE email = 'direction@rescape.fr'").get();
+        .run(id, 'Directeur Test', 'direction@rescape-asso.com', hash, 'DIRECTION');
+    user = db.prepare("SELECT * FROM User WHERE email = 'direction@rescape-asso.com'").get();
     console.log("User inserted.");
 } else {
-    console.log("User 'direction@rescape.fr' found in Database.");
+    console.log("User 'direction@rescape-asso.com' found in Database.");
 }
 
 console.log({

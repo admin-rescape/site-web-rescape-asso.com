@@ -43,7 +43,7 @@ describe("Security — Authentication & Authorization", () => {
 
     describe("BENEVOLE — restricted access", () => {
         beforeEach(() => {
-            mockAuth.mockResolvedValue({ user: { id: "benevole-1", role: "BENEVOLE", email: "benevole@rescape.fr" } } as never);
+            mockAuth.mockResolvedValue({ user: { id: "benevole-1", role: "BENEVOLE", email: "benevole@rescape-asso.com" } } as never);
         });
 
         it("should NOT allow BENEVOLE to create an article", async () => {
@@ -74,7 +74,7 @@ describe("Security — Authentication & Authorization", () => {
 
     describe("TRESORIERE — accounting access", () => {
         beforeEach(() => {
-            mockAuth.mockResolvedValue({ user: { id: "tres-1", role: "TRESORIERE", email: "nadia@rescape.fr" } } as never);
+            mockAuth.mockResolvedValue({ user: { id: "tres-1", role: "TRESORIERE", email: "nadia@rescape-asso.com" } } as never);
         });
 
         it("should allow TRESORIERE to create an accounting entry", async () => {
@@ -150,7 +150,7 @@ describe("Security — Authentication & Authorization", () => {
 
     describe("DIRECTRICE — full admin access", () => {
         beforeEach(() => {
-            mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape.fr" } } as never);
+            mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape-asso.com" } } as never);
         });
 
         it("should allow DIRECTRICE to create an article", async () => {
@@ -172,7 +172,7 @@ describe("Security — Authentication & Authorization", () => {
 
     describe("SUPER_ADMIN — restricted from accounting", () => {
         beforeEach(() => {
-            mockAuth.mockResolvedValue({ user: { id: "sa-1", role: "SUPER_ADMIN", email: "admin@rescape.fr" } } as never);
+            mockAuth.mockResolvedValue({ user: { id: "sa-1", role: "SUPER_ADMIN", email: "admin@rescape-asso.com" } } as never);
         });
 
         it("should allow SUPER_ADMIN to manage users", async () => {
@@ -192,7 +192,7 @@ describe("Security — Authentication & Authorization", () => {
 
 describe("Security — Input Sanitization", () => {
     it("should prevent XSS payloads in article title", async () => {
-        mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape.fr" } } as never);
+        mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape-asso.com" } } as never);
         (mockPrisma.article.create as import("vitest").Mock).mockResolvedValue({ id: "art-xss" });
         const { createArticle } = await import("@/actions/articles");
         const formData = new FormData();
@@ -206,7 +206,7 @@ describe("Security — Input Sanitization", () => {
     });
 
     it("should prevent SQL injection via accounting description", async () => {
-        mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape.fr" } } as never);
+        mockAuth.mockResolvedValue({ user: { id: "dir-1", role: "DIRECTRICE", email: "vanessa@rescape-asso.com" } } as never);
         (mockPrisma.accountingEntry.create as import("vitest").Mock).mockResolvedValue({ id: "acc-sql" });
         const { createAccountingEntry } = await import("@/actions/accounting");
         const formData = new FormData();

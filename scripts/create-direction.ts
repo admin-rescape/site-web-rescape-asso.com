@@ -2,7 +2,7 @@ import { prisma } from '../src/lib/prisma';
 import bcrypt from 'bcryptjs';
 
 async function main() {
-    const email = 'direction@rescape.fr';
+    const email = 'direction@rescape-asso.com';
     let user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {

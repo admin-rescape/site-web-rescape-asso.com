@@ -6,7 +6,7 @@ const mockPrisma = vi.mocked(prisma);
 const mockAuth = vi.mocked(auth);
 
 function session(role: string, id = "u-1") {
-    return { user: { id, role, email: `${id}@rescape.fr` } } as never;
+    return { user: { id, role, email: `${id}@rescape-asso.com` } } as never;
 }
 
 function makeFormData(data: Record<string, string>): FormData {

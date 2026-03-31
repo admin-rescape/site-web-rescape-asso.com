@@ -22,7 +22,7 @@ async function sendPartnerMessage(formData: FormData) {
     await db.message.create({
         data: {
             name: (session.user as { organizationName?: string }).organizationName || session.user.name || "Partenaire",
-            email: session.user.email || "partenaire@rescape.fr",
+            email: session.user.email || "partenaire@rescape-asso.com",
             subject: `[Partenaire] ${subject}`,
             content: content.trim(),
         },

@@ -55,7 +55,7 @@ describe("Navbar — Public (authenticated any role)", () => {
     beforeEach(() => {
         mockUseSession.mockReturnValue({
             data: {
-                user: { id: "user-1", name: "User", email: "user@rescape.fr", role: "DIRECTRICE" },
+                user: { id: "user-1", name: "User", email: "user@rescape-asso.com", role: "DIRECTRICE" },
                 expires: "9999-12-31T23:59:59.999Z"
             } as never,
             status: "authenticated",

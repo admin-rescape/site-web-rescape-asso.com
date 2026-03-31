@@ -4,8 +4,8 @@ import { test, expect } from "@playwright/test";
 const TEST_PASSWORD = process.env.E2E_TEST_PASSWORD ?? "";
 const USERS = {
     directrice: { email: "delaruevanessa48@gmail.com", password: TEST_PASSWORD },
-    tresoriere: { email: "nadia@rescape.fr", password: TEST_PASSWORD },
-    benevole: { email: "benevole@rescape.fr", password: TEST_PASSWORD },
+    tresoriere: { email: "nadia@rescape-asso.com", password: TEST_PASSWORD },
+    benevole: { email: "benevole@rescape-asso.com", password: TEST_PASSWORD },
     partenaire: { email: "partenaire@test.fr", password: TEST_PASSWORD },
 };
 
