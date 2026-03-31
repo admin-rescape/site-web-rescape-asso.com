@@ -72,8 +72,8 @@ export function AdminSidebar({ role, label, userName }: AdminSidebarProps) {
                         </nav>
                     </div>
 
-                    {/* Contenu du Site - Direction & Admin */}
-                    {hasAccess(["SUPER_ADMIN", "DIRECTION"]) && (
+                    {/* Contenu du Site - Direction */}
+                    {hasAccess(["DIRECTION"]) && (
                         <div>
                             <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Contenu Vitrine</p>
                             <nav className="space-y-1.5">
@@ -218,24 +218,28 @@ export function AdminSidebar({ role, label, userName }: AdminSidebarProps) {
                         <div>
                             <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Ressources Humaines</p>
                             <nav className="space-y-1.5">
-                                <Link href="/admin/dashboard/team" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all group ${pathname.startsWith("/admin/dashboard/team") ? "bg-purple-50 text-purple-700 shadow-sm border border-purple-100/50" : "text-slate-600 hover:bg-slate-50"}`}>
-                                    <div className={`p-1.5 rounded-md transition-colors ${pathname.startsWith("/admin/dashboard/team") ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"}`}>
-                                        <Users className="w-4 h-4" />
-                                    </div>
-                                    <span className="text-sm">L&apos;Équipe</span>
-                                </Link>
+                                {hasAccess(["DIRECTION"]) && (
+                                    <Link href="/admin/dashboard/team" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all group ${pathname.startsWith("/admin/dashboard/team") ? "bg-purple-50 text-purple-700 shadow-sm border border-purple-100/50" : "text-slate-600 hover:bg-slate-50"}`}>
+                                        <div className={`p-1.5 rounded-md transition-colors ${pathname.startsWith("/admin/dashboard/team") ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"}`}>
+                                            <Users className="w-4 h-4" />
+                                        </div>
+                                        <span className="text-sm">L&apos;Équipe</span>
+                                    </Link>
+                                )}
                                 <Link href="/admin/dashboard/users" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all group ${pathname.startsWith("/admin/dashboard/users") ? "bg-blue-50 text-blue-700 shadow-sm border border-blue-100/50" : "text-slate-600 hover:bg-slate-50"}`}>
                                     <div className={`p-1.5 rounded-md transition-colors ${pathname.startsWith("/admin/dashboard/users") ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"}`}>
                                         <Users className="w-4 h-4" />
                                     </div>
                                     <span className="text-sm">Contrôle des Accès</span>
                                 </Link>
-                                <Link href="/admin/dashboard/missions" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all group ${pathname.startsWith("/admin/dashboard/missions") ? "bg-amber-50 text-amber-700 shadow-sm border border-amber-100/50" : "text-slate-600 hover:bg-slate-50"}`}>
-                                    <div className={`p-1.5 rounded-md transition-colors ${pathname.startsWith("/admin/dashboard/missions") ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"}`}>
-                                        <Briefcase className="w-4 h-4" />
-                                    </div>
-                                    <span className="text-sm">Missions Bénévoles</span>
-                                </Link>
+                                {hasAccess(["DIRECTION"]) && (
+                                    <Link href="/admin/dashboard/missions" className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold transition-all group ${pathname.startsWith("/admin/dashboard/missions") ? "bg-amber-50 text-amber-700 shadow-sm border border-amber-100/50" : "text-slate-600 hover:bg-slate-50"}`}>
+                                        <div className={`p-1.5 rounded-md transition-colors ${pathname.startsWith("/admin/dashboard/missions") ? "bg-amber-100 text-amber-700" : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"}`}>
+                                            <Briefcase className="w-4 h-4" />
+                                        </div>
+                                        <span className="text-sm">Missions Bénévoles</span>
+                                    </Link>
+                                )}
                             </nav>
                         </div>
                     )}

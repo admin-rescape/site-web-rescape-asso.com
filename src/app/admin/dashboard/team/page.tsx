@@ -32,6 +32,20 @@ export default async function TeamAdminPage() {
                 </Link>
             </div>
 
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 sm:p-5 flex items-start gap-4 shadow-sm">
+                <div className="p-2 bg-blue-100 text-blue-600 rounded-xl shrink-0">
+                    <Users className="w-5 h-5" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-blue-900">Affichage Vitrine vs Accès Portail</h3>
+                    <p className="text-sm text-blue-700/90 mt-1 leading-relaxed">
+                        Ajouter un membre ici gère uniquement son profil public sur la page <strong>Notre Histoire</strong>. 
+                        Pour que cette personne puisse se connecter au portail (mot de passe, accès métier), vous devez lui créer un compte séparé dans 
+                        <Link href="/admin/dashboard/users" className="font-bold py-0.5 px-2 bg-blue-100 rounded-lg ml-1 hover:bg-blue-200 hover:text-blue-900 transition-colors inline-block mt-1 sm:mt-0">Contrôle des Accès &rarr;</Link>
+                    </p>
+                </div>
+            </div>
+
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">

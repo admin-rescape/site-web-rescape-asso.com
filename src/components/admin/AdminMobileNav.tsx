@@ -111,7 +111,7 @@ export function AdminMobileNav({ role, label, userName }: AdminMobileNavProps) {
                         </div>
 
                         {/* Contenu Vitrine */}
-                        {hasAccess(["SUPER_ADMIN", "DIRECTION"]) && (
+                        {hasAccess(["DIRECTION"]) && (
                             <div>
                                 <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Contenu Vitrine</p>
                                 <nav className="space-y-1.5">
@@ -228,14 +228,18 @@ export function AdminMobileNav({ role, label, userName }: AdminMobileNavProps) {
                                         <div className="p-1.5 bg-slate-100 rounded-md text-slate-400 group-hover:bg-slate-200 transition-colors"><Users className="w-4 h-4" /></div>
                                         <span className="text-sm">Contrôle des Accès</span>
                                     </Link>
-                                    <Link onClick={() => setIsOpen(false)} href="/admin/dashboard/team" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 font-semibold transition-all group">
-                                        <div className="p-1.5 bg-slate-100 rounded-md text-slate-400 group-hover:bg-slate-200 transition-colors"><Users className="w-4 h-4" /></div>
-                                        <span className="text-sm">L&apos;Équipe</span>
-                                    </Link>
-                                    <Link onClick={() => setIsOpen(false)} href="/admin/dashboard/missions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 font-semibold transition-all group">
-                                        <div className="p-1.5 bg-slate-100 rounded-md text-slate-400 group-hover:bg-slate-200 transition-colors"><Briefcase className="w-4 h-4" /></div>
-                                        <span className="text-sm">Gestion Missions Bénévoles</span>
-                                    </Link>
+                                    {hasAccess(["DIRECTION"]) && (
+                                        <Link onClick={() => setIsOpen(false)} href="/admin/dashboard/team" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 font-semibold transition-all group">
+                                            <div className="p-1.5 bg-slate-100 rounded-md text-slate-400 group-hover:bg-slate-200 transition-colors"><Users className="w-4 h-4" /></div>
+                                            <span className="text-sm">L&apos;Équipe</span>
+                                        </Link>
+                                    )}
+                                    {hasAccess(["DIRECTION"]) && (
+                                        <Link onClick={() => setIsOpen(false)} href="/admin/dashboard/missions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 font-semibold transition-all group">
+                                            <div className="p-1.5 bg-slate-100 rounded-md text-slate-400 group-hover:bg-slate-200 transition-colors"><Briefcase className="w-4 h-4" /></div>
+                                            <span className="text-sm">Gestion Missions Bénévoles</span>
+                                        </Link>
+                                    )}
                                 </nav>
                             </div>
                         )}

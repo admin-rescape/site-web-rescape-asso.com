@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/set-provider.js sqlite && prisma generate && next dev",
     "build": "node scripts/set-provider.js postgresql && prisma generate && next build",
     "start": "next start",
     "lint": "eslint",

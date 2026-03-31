@@ -81,6 +81,20 @@ export function UserList({ users, currentUser }: UserListProps) {
                 </button>
             </div>
 
+            <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 sm:p-5 flex items-start gap-4 shadow-sm">
+                <div className="p-2 bg-amber-100 text-amber-600 rounded-xl shrink-0">
+                    <Building className="w-5 h-5" />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-amber-900">Création des Administrateurs & Bureau</h3>
+                    <p className="text-sm text-amber-700/90 mt-1 leading-relaxed">
+                        Créer un accès ici donne le droit de se connecter au portail, mais <strong>n'affiche pas</strong> la personne publiquement sur le site. 
+                        S'il s'agit d'un membre officiel du bureau, vous pouvez présenter son profil au public via la page
+                        <a href="/admin/dashboard/team" className="font-bold py-0.5 px-2 bg-amber-100 hover:bg-amber-200 hover:text-amber-900 rounded-lg ml-1 transition-colors inline-block mt-1 sm:mt-0">L'Équipe Vitrine &rarr;</a>
+                    </p>
+                </div>
+            </div>
+
             <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="p-4 border-b border-slate-100 bg-slate-50/30 flex items-center gap-4">
                     <div className="relative flex-1 max-w-md">
