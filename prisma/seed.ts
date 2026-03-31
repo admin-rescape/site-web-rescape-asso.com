@@ -25,9 +25,9 @@ async function main() {
     const passwordHash = await bcrypt.hash('Rescape2026!', 10);
 
     const usersToSeed = [
-        { email: 'contact-technique@rescape-asso.com', name: 'Dev', role: 'SUPER_ADMIN' },
-        { email: 'direction@rescape-asso.com', name: 'Vanessa Delarue', role: 'DIRECTRICE' },
-        { email: 'tresorier@rescape-asso.com', name: 'Nadia Bennaceur', role: 'TRESORIERE' },
+        { email: 'contact-technique@rescape-asso.com', name: 'Dev', role: 'SUPER_ADMIN', organizationName: 'Rescape' },
+        { email: 'direction@rescape-asso.com', name: 'Vanessa Delarue', role: 'DIRECTRICE', organizationName: 'Rescape' },
+        { email: 'tresorier@rescape-asso.com', name: 'Nadia Bennaceur', role: 'TRESORIERE', organizationName: 'Rescape' },
     ];
 
     for (const u of usersToSeed) {
